@@ -217,7 +217,7 @@ export default function Page() {
           onChange={async (e) => {
             setNameFilter(e.target.value);
           }}
-          className="border-transparent focus-within:border-primary"
+          className="focus-within:border-primary"
           prefix={<Icon icon="mdi-light:magnify" />}
         />
         <Select
@@ -258,7 +258,7 @@ export default function Page() {
       </div>
 
       {/* Table */}
-      <div className="overflow-scroll">
+      <div className="overflow-scroll my-4">
         <Table<UserDataType>
           columns={columns}
           dataSource={userData}

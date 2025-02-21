@@ -294,7 +294,7 @@ function UserPermission({
           onChange={async (e) => {
             setNameFilter(e.target.value);
           }}
-          className="border-transparent focus-within:border-primary"
+          className="focus-within:border-primary"
           prefix={<Icon icon="mdi-light:magnify" />}
         />
         <Select
@@ -322,7 +322,7 @@ function UserPermission({
 
       <div className="hidden xl:block flex-1"></div>
       {/* Table */}
-      <div className="overflow-scroll">
+      <div className="overflow-scroll my-4">
         <Table<UserDataType>
           columns={columns}
           dataSource={userData}
