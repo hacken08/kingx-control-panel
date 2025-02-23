@@ -33,7 +33,6 @@ export default function Page() {
     const init = async () => {
       const userJSON = (await getCookie("user")) ?? "{}";
       const user = JSON.parse(userJSON);
-
       if (Object.keys(user).length > 0) {
         router.replace("/dashboard/user-management");
       }
@@ -65,10 +64,12 @@ export default function Page() {
       router: router,
     });
 
-    // check for error
-    if (response.status == false) {
-      toast.error(response.message);
+    console.log("response", response);
+    
 
+    // check for error
+    if (response.status === false) {
+      toast.error(response.message);
       return;
     }
 

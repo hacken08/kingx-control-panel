@@ -41,7 +41,7 @@ export default function Page() {
   const [count, setCount] = useState(0);
   const [selectedUser, setSelectedUser] = useState<undefined | UserDataType>();
 
-  const [nameFilter, setNameFilter] = useState<String | null>();
+  const [nameFilter, setNameFilter] = useState<string | null>();
   const [roleFiltre, setRoleFilter] = useState<Role | null>();
 
   const perPageData = 10;
