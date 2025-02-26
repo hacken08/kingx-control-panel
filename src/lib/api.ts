@@ -178,11 +178,9 @@ export async function ApiCall(
   const refresh_token = getCookie("refresh_token");
 
   // step 2: if not exist redirect to login
-  if (!token) {
-    return args.router.replace("/login");
-  }
-  if (!refresh_token) {
-    return args.router.replace("/login");
+  if (!token || !refresh_token) {
+    args.router.replace("/login");
+    return { status: false, data: [], message: "You have been logout" };
   }
   // step 3: make api call with access token
   const response = await ApiCallWithToken({ ...args, token: token });
@@ -198,11 +196,11 @@ export async function ApiCall(
 
   const validateRefreshTokenResponse = await ApiCallWihtoutToken({
     query: `mutation Mutation($refreshToken: String!, $token: String!) {
-  refreshAccessToken(refreshToken: $refreshToken, token: $token) {
-  access_token,
-  refresh_token  
-  }
-}`,
+        refreshAccessToken(refreshToken: $refreshToken, token: $token) {
+        access_token,
+        refresh_token  
+        }
+      }`,
     variables: { refreshToken: refresh_token, token: token },
     headers: args.headers,
     router: args.router,
@@ -211,7 +209,8 @@ export async function ApiCall(
   // step 5: if step 4 fail redirect to login
   if (!validateRefreshTokenResponse || !validateRefreshTokenResponse.status) {
     // return redirect("/login");
-    return args.router.replace("/login");
+    args.router.replace("/login");
+    return { status: false, data: [], message: "You have been logout" };
   }
 
   // step 6: if step 4 success save new token (refresh and access) on client
@@ -231,13 +230,12 @@ export async function ApiCall(
   const revalidatedResponse = await ApiCallWithToken({ ...args, token: token });
 
   if (
-    !(
-      revalidatedResponse.message == "Invalid token payload" ||
-      revalidatedResponse.message == "Error verifying token"
-    )
+    !(revalidatedResponse.message == "Invalid token payload" ||
+      revalidatedResponse.message == "Error verifying token")
   ) {
     return revalidatedResponse;
   }
 
-  return args.router.replace("/login");
+  args.router.replace("/login");
+  return { status: false, data: [], message: "You have been logout" };
 }

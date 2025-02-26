@@ -27,11 +27,11 @@ export function Sidebar({ className }: SidebarProps) {
     (async () => {
       const res = await ApiCall({
         query: `query GetUserById($getUserByIdId: Int!) {
-  getUserById(id: $getUserByIdId) {
-  id, 
-  role  
-  }
-}`,
+            getUserById(id: $getUserByIdId) {
+            id, 
+            role  
+            }
+          }`,
         router: router,
         variables: {
           getUserByIdId: Number(userId),
